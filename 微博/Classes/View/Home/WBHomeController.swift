@@ -23,7 +23,7 @@ class WBHomeController: WBBaseViewController {
         for i in 0..<15 {
             var imageTitle: String = ""
             if i < 5 {
-                imageTitle = "beijing"
+                imageTitle = "beijing.jpg"
             }else if i > 5 && i < 10{
                 imageTitle = "ren"
             }else{

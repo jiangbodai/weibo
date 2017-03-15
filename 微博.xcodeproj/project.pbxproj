@@ -29,7 +29,7 @@
 		725A47CF1E4AFFE500C7FE89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 725A47CE1E4AFFE500C7FE89 /* Assets.xcassets */; };
 		72969DD11E78D2CA00A077BE /* ren.png in Resources */ = {isa = PBXBuildFile; fileRef = 72969DD01E78D2CA00A077BE /* ren.png */; };
 		72969DD31E78D2D100A077BE /* zhuanshi.png in Resources */ = {isa = PBXBuildFile; fileRef = 72969DD21E78D2D100A077BE /* zhuanshi.png */; };
-		72969DD51E78E10B00A077BE /* beijing.png in Resources */ = {isa = PBXBuildFile; fileRef = 72969DD41E78E10B00A077BE /* beijing.png */; };
+		72969DDB1E78EA7600A077BE /* beijing.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 72969DDA1E78EA7600A077BE /* beijing.jpg */; };
 		72C041C31E5688DA001A11FF /* jcore-ios-1.1.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72C041C01E5688DA001A11FF /* jcore-ios-1.1.1.a */; };
 		72C041C41E5688DA001A11FF /* jpush-ios-3.0.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72C041C11E5688DA001A11FF /* jpush-ios-3.0.2.a */; };
 		72C0420D1E568BB4001A11FF /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 72C041E11E568BB4001A11FF /* MJRefreshAutoFooter.m */; };
@@ -83,7 +83,7 @@
 		725A47D31E4AFFE500C7FE89 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		72969DD01E78D2CA00A077BE /* ren.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ren.png; sourceTree = "<group>"; };
 		72969DD21E78D2D100A077BE /* zhuanshi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhuanshi.png; sourceTree = "<group>"; };
-		72969DD41E78E10B00A077BE /* beijing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beijing.png; sourceTree = "<group>"; };
+		72969DDA1E78EA7600A077BE /* beijing.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beijing.jpg; sourceTree = "<group>"; };
 		72C041C01E5688DA001A11FF /* jcore-ios-1.1.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jcore-ios-1.1.1.a"; sourceTree = "<group>"; };
 		72C041C11E5688DA001A11FF /* jpush-ios-3.0.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-3.0.2.a"; sourceTree = "<group>"; };
 		72C041C21E5688DA001A11FF /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
@@ -303,7 +303,7 @@
 		72B83B731E4D92B0000E2D75 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				72969DD41E78E10B00A077BE /* beijing.png */,
+				72969DDA1E78EA7600A077BE /* beijing.jpg */,
 				72969DD01E78D2CA00A077BE /* ren.png */,
 				72969DD21E78D2D100A077BE /* zhuanshi.png */,
 			);
@@ -486,7 +486,7 @@
 			files = (
 				72C0421B1E568BB4001A11FF /* MJRefresh.bundle in Resources */,
 				725A47CF1E4AFFE500C7FE89 /* Assets.xcassets in Resources */,
-				72969DD51E78E10B00A077BE /* beijing.png in Resources */,
+				72969DDB1E78EA7600A077BE /* beijing.jpg in Resources */,
 				72969DD31E78D2D100A077BE /* zhuanshi.png in Resources */,
 				72969DD11E78D2CA00A077BE /* ren.png in Resources */,
 			);
