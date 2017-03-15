@@ -9,38 +9,144 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, JPUSHRegisterDelegate {
 
     var window: UIWindow?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        window = UIWindow()
+        window?.backgroundColor = UIColor.white
+        
+        window?.rootViewController = WBTabBarController()
+        
+        window?.makeKeyAndVisible()
+        
+//        setupNotifactionCertificate(launchOptions: launchOptions)
+        
         return true
     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+    // 注册通知iOS8以上
+    private func setupNotifactionCertificate(launchOptions: [UIApplicationLaunchOptionsKey: Any]?){
+        
+        let entity = JPUSHRegisterEntity()
+        entity.types = Int(JPAuthorizationOptions.alert.rawValue) |  Int(JPAuthorizationOptions.sound.rawValue) |  Int(JPAuthorizationOptions.badge.rawValue);
+        
+        JPUSHService.register(forRemoteNotificationConfig: entity, delegate: self)
+        
+        
+        // 注册极光推送
+        JPUSHService.setup(withOption: launchOptions, appKey: "a128db1b49773439c0ff9f8c", channel:"Publish channel" , apsForProduction: false);
+        // 获取推送消息
+        let remote = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? Dictionary<String,Any>;
+        // 如果remote不为空，就代表应用在未打开的时候收到了推送消息
+        if remote != nil {
+            // 收到推送消息实现的方法
+            self.perform(#selector(receivePush), with: remote, afterDelay: 1.0);
+        }
+        
+        
+//        let setting = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+//        UIApplication.shared.registerUserNotificationSettings(setting)
+        
     }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    // 接收到推送实现的方法
+   @objc private func receivePush(_ userInfo : Dictionary<String,Any>) {
+        // 角标变0
+        UIApplication.shared.applicationIconBadgeNumber = 0;
+        // 剩下的根据需要自定义
+//        self.tabBarVC?.selectedIndex = 0;
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: NotificationName_ReceivePush), object: NotificationObject_Sueecess, userInfo: userInfo)
     }
+    
 
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    //mark --- JPUSHRegisterDelegate
+    @available(iOS 10.0, *)
+    func jpushNotificationCenter(_ center: UNUserNotificationCenter!, didReceive response: UNNotificationResponse!, withCompletionHandler completionHandler: (() -> Void)!) {
+        
+        let userInfo = response.notification.request.content.userInfo;
+        if response.notification.request.trigger is UNPushNotificationTrigger {
+            JPUSHService.handleRemoteNotification(userInfo);
+        }
+        completionHandler();
+////         应用打开的时候收到推送消息
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: NotificationName_ReceivePush), object: NotificationObject_Sueecess, userInfo: userInfo)
     }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    @available(iOS 10.0, *)
+    func jpushNotificationCenter(_ center: UNUserNotificationCenter!, willPresent notification: UNNotification!, withCompletionHandler completionHandler: ((Int) -> Void)!) {
+        
     }
-
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        JPUSHService.handleRemoteNotification(userInfo);
+        completionHandler(UIBackgroundFetchResult.newData);
     }
+    
+    
+    //注册apns失败
+    //当注册失败时，触发此函数。
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("注册通知失败=========",error)
+    }
+    
+    //注册apns成功
+    //会接收来自苹果服务器给你返回的deviceToken，然后你需要将它添加到你本地的推送服务器上。（很重要，决定你的设备能不能接收到推送消息）。
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
 
-
+        JPUSHService.registerDeviceToken(deviceToken)
+        
+        let message = String(data: deviceToken, encoding: .utf8) ?? ""
+        
+        let alert = UIAlertView(title: "注册成功", message: message, delegate: nil, cancelButtonTitle: "确定")
+        
+        alert.show()
+    }
+    
+    
+    ///这个函数则是当设备接收到来自苹果推送服务器的消息时触发的，用来显示推送消息。
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+        print("userInfo======",userInfo)
+        
+        let message = (userInfo["aps"] as? NSDictionary)?["alert"]
+        
+        
+        let alertView = UIAlertView(title: "提示", message: message as! String?, delegate: nil, cancelButtonTitle: "确定")
+        alertView.show()
+        
+    }
+    
+    
+    
+//    private func registerAppNotificationSettings(launchOptions:[UIApplicationLaunchOptionsKey: Any]?) {
+//        if #available(iOS 10.0, *) {
+//            let notifiCenter = UNUserNotificationCenter.current()
+//            notifiCenter.delegate = self
+//            let types = UNAuthorizationOptions(arrayLiteral: [.alert, .badge, .sound])
+//            notifiCenter.requestAuthorization(options: types) { (flag, error) in
+//                if flag {
+//                    print("iOS request notification success")
+//                }else{
+//                    print(" iOS 10 request notification fail")
+//                }
+//            }
+//        } else { //iOS8,iOS9registration
+//            let setting = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+//            UIApplication.shared.registerUserNotificationSettings(setting)
+//        }
+//        
+//        DispatchQueue.main.async {
+//            UIApplication.shared.registerForRemoteNotifications()
+//            let userSettings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
+//            UIApplication.shared.registerUserNotificationSettings(userSettings)
+//        }
+//    }
+//    
 }
 
