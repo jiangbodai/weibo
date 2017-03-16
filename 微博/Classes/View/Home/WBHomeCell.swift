@@ -8,8 +8,12 @@
 
 import UIKit
 
-class WBHomeCell: UITableViewCell {
+protocol WBHomeCellDelegate {
+    func homeCellDidSelectRowAt(dict:[String: String])
+}
 
+class WBHomeCell: UITableViewCell {
+    
     var dataStr: String? {
         didSet{
             label.text = dataStr
@@ -25,12 +29,17 @@ class WBHomeCell: UITableViewCell {
         }
     }
     
+    typealias editedBlock = ([String: String])
     
     lazy fileprivate var label: UILabel = UILabel()
     lazy fileprivate var subLabel: UILabel = UILabel()
-    lazy fileprivate var seperator: UIView = UIView()
     lazy fileprivate var imageview: UIImageView = UIImageView()
-
+    lazy fileprivate var button: UIButton = UIButton(type: UIButtonType.contactAdd)
+    lazy fileprivate var seperator: UIView = UIView()
+    var delegate: WBHomeCellDelegate?
+    var edited : editedBlock?
+    
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -44,6 +53,9 @@ class WBHomeCell: UITableViewCell {
 //Mark -- 设置界面
 extension WBHomeCell{
     fileprivate func setupUI(){
+        self.selectionStyle = .none
+        
+        
         contentView.addSubview(imageview)
         
 //        label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 54))
@@ -56,6 +68,9 @@ extension WBHomeCell{
         subLabel.textColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
         contentView.addSubview(subLabel)
         
+        button.addTarget(self, action: #selector(adited), for: .touchUpInside)
+        contentView.addSubview(button)
+        
 //        seperator = UIView(frame: CGRect(x: 1, y: 54, width: UIScreen.main.bounds.width, height: 1))
         seperator.backgroundColor = #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1)
         contentView.addSubview(seperator)
@@ -67,7 +82,33 @@ extension WBHomeCell{
         imageview.frame = CGRect(x: 10, y: 5, width: self.frame.height - 11, height: self.frame.height - 11)
         label.frame = CGRect(x: imageview.frame.maxX + 5, y: 5, width: self.contentView.frame.width - imageview.frame.maxX - 10, height: 30)
         subLabel.frame = CGRect(x: label.frame.minX, y: label.frame.maxY, width: label.frame.width, height: self.contentView.frame.height - label.frame.height - 1)
+        
+        button.frame = CGRect(x: UIScreen.main.bounds.width - 40, y: (self.contentView.frame.height - 30) * 0.5, width: 30, height: 30)
+        
         seperator.frame = CGRect(x: 0, y: self.contentView.frame.height - 1, width: UIScreen.main.bounds.width, height: 1)
+    }
+    
+    
+}
+
+//Mark -- 设置数据
+extension WBHomeCell{
+    func cellForStr(cellStr: String?)  {
+        if let tempStr: String = cellStr {
+            label.text = tempStr
+        }
+    }
+    
+    func cellForDict(dict: [String: String]?) {
+        guard let dict = dict,
+            let imageTitle = dict["imageTitle"],
+            let title = dict["title"],
+            let subTitle = dict["subTitle"]
+            else { return }
+        label.text = title
+        subLabel.text = subTitle
+        imageview.image = UIImage(named: imageTitle)
+        
     }
     
     class func cellID() -> String {
@@ -79,12 +120,11 @@ extension WBHomeCell{
     }
 }
 
-//Mark -- 设置数据
+///私有方法
 extension WBHomeCell{
-    func cellForStr(cellStr: String?)  {
-        if let tempStr: String = cellStr {
-            label.text = tempStr
-        }
+    @objc fileprivate func adited(){
+        guard let dict = dict
+            else { return}
+        delegate?.homeCellDidSelectRowAt(dict: dict)
     }
 }
-

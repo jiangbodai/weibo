@@ -52,13 +52,29 @@ extension WBHomeController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = WBHomeCell(style: .default, reuseIdentifier: WBHomeCell.cellID())
-        cell.dict = self.dataList[indexPath.row]
 //        cell.dataStr = "\(indexPath.row.description)"
 //        cell.cellForStr(cellStr: self.dataList[indexPath.row])
+        cell.dict = self.dataList[indexPath.row]
+//        cell.cellForDict(dict: self.dataList[indexPath.row])
+        cell.delegate = self
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return WBHomeCell.cellHeight()
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+}
+
+///实现代理方法
+extension WBHomeController: WBHomeCellDelegate{
+    func homeCellDidSelectRowAt(dict: [String : String]) {
+        guard let message = dict["subTitle"] else { return }
+        
+        let alertView = UIAlertView(title: nil, message: message, delegate: nil, cancelButtonTitle: "确定")
+        alertView.show()
     }
 }
