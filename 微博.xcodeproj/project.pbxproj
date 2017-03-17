@@ -30,6 +30,10 @@
 		72969DD11E78D2CA00A077BE /* ren.png in Resources */ = {isa = PBXBuildFile; fileRef = 72969DD01E78D2CA00A077BE /* ren.png */; };
 		72969DD31E78D2D100A077BE /* zhuanshi.png in Resources */ = {isa = PBXBuildFile; fileRef = 72969DD21E78D2D100A077BE /* zhuanshi.png */; };
 		72969DDB1E78EA7600A077BE /* beijing.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 72969DDA1E78EA7600A077BE /* beijing.jpg */; };
+		72969DDE1E7A616100A077BE /* WBRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72969DDD1E7A616100A077BE /* WBRefreshControl.swift */; };
+		72969DE01E7B81E500A077BE /* shulin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 72969DDF1E7B81E500A077BE /* shulin.jpg */; };
+		72969DE21E7B81EC00A077BE /* meinv.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 72969DE11E7B81EC00A077BE /* meinv.jpg */; };
+		72969DE41E7B81F400A077BE /* xiaohai.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 72969DE31E7B81F400A077BE /* xiaohai.jpg */; };
 		72C041C31E5688DA001A11FF /* jcore-ios-1.1.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72C041C01E5688DA001A11FF /* jcore-ios-1.1.1.a */; };
 		72C041C41E5688DA001A11FF /* jpush-ios-3.0.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72C041C11E5688DA001A11FF /* jpush-ios-3.0.2.a */; };
 		72C0420D1E568BB4001A11FF /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 72C041E11E568BB4001A11FF /* MJRefreshAutoFooter.m */; };
@@ -84,6 +88,10 @@
 		72969DD01E78D2CA00A077BE /* ren.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ren.png; sourceTree = "<group>"; };
 		72969DD21E78D2D100A077BE /* zhuanshi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhuanshi.png; sourceTree = "<group>"; };
 		72969DDA1E78EA7600A077BE /* beijing.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = beijing.jpg; sourceTree = "<group>"; };
+		72969DDD1E7A616100A077BE /* WBRefreshControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WBRefreshControl.swift; sourceTree = "<group>"; };
+		72969DDF1E7B81E500A077BE /* shulin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = shulin.jpg; sourceTree = "<group>"; };
+		72969DE11E7B81EC00A077BE /* meinv.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = meinv.jpg; sourceTree = "<group>"; };
+		72969DE31E7B81F400A077BE /* xiaohai.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = xiaohai.jpg; sourceTree = "<group>"; };
 		72C041C01E5688DA001A11FF /* jcore-ios-1.1.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jcore-ios-1.1.1.a"; sourceTree = "<group>"; };
 		72C041C11E5688DA001A11FF /* jpush-ios-3.0.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-3.0.2.a"; sourceTree = "<group>"; };
 		72C041C21E5688DA001A11FF /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
@@ -227,6 +235,7 @@
 		7251AC581E4B1465008F1411 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				72969DDC1E7A614900A077BE /* CommonView */,
 				7251AC591E4B1465008F1411 /* Main */,
 				723CBD591E4D946600155553 /* Home */,
 				7251AC5A1E4B1465008F1411 /* Message */,
@@ -300,12 +309,23 @@
 			path = "微博";
 			sourceTree = "<group>";
 		};
+		72969DDC1E7A614900A077BE /* CommonView */ = {
+			isa = PBXGroup;
+			children = (
+				72969DDD1E7A616100A077BE /* WBRefreshControl.swift */,
+			);
+			path = CommonView;
+			sourceTree = "<group>";
+		};
 		72B83B731E4D92B0000E2D75 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
 				72969DDA1E78EA7600A077BE /* beijing.jpg */,
 				72969DD01E78D2CA00A077BE /* ren.png */,
 				72969DD21E78D2D100A077BE /* zhuanshi.png */,
+				72969DDF1E7B81E500A077BE /* shulin.jpg */,
+				72969DE11E7B81EC00A077BE /* meinv.jpg */,
+				72969DE31E7B81F400A077BE /* xiaohai.jpg */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -484,10 +504,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72969DE01E7B81E500A077BE /* shulin.jpg in Resources */,
 				72C0421B1E568BB4001A11FF /* MJRefresh.bundle in Resources */,
 				725A47CF1E4AFFE500C7FE89 /* Assets.xcassets in Resources */,
 				72969DDB1E78EA7600A077BE /* beijing.jpg in Resources */,
 				72969DD31E78D2D100A077BE /* zhuanshi.png in Resources */,
+				72969DE41E7B81F400A077BE /* xiaohai.jpg in Resources */,
+				72969DE21E7B81EC00A077BE /* meinv.jpg in Resources */,
 				72969DD11E78D2CA00A077BE /* ren.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -503,6 +526,7 @@
 				72C042141E568BB4001A11FF /* MJRefreshAutoStateFooter.m in Sources */,
 				72C042161E568BB4001A11FF /* MJRefreshBackNormalFooter.m in Sources */,
 				72C042201E568BB4001A11FF /* UIView+MJExtension.m in Sources */,
+				72969DDE1E7A616100A077BE /* WBRefreshControl.swift in Sources */,
 				72C042181E568BB4001A11FF /* MJRefreshGifHeader.m in Sources */,
 				723CBD5B1E4D949C00155553 /* WBHomeController.swift in Sources */,
 				72C0421F1E568BB4001A11FF /* UIScrollView+MJRefresh.m in Sources */,

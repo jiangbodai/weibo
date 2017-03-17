@@ -29,7 +29,7 @@ class WBHomeCell: UITableViewCell {
         }
     }
     
-    typealias editedBlock = ([String: String])
+    typealias editedBlock = ([String: String]) ->()
     
     lazy fileprivate var label: UILabel = UILabel()
     lazy fileprivate var subLabel: UILabel = UILabel()
@@ -55,7 +55,7 @@ extension WBHomeCell{
     fileprivate func setupUI(){
         self.selectionStyle = .none
         
-        
+        imageview.contentMode = .redraw
         contentView.addSubview(imageview)
         
 //        label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 54))
@@ -126,5 +126,6 @@ extension WBHomeCell{
         guard let dict = dict
             else { return}
         delegate?.homeCellDidSelectRowAt(dict: dict)
+        edited?(dict)
     }
 }

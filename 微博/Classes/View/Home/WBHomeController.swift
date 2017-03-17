@@ -20,18 +20,46 @@ class WBHomeController: WBBaseViewController {
     }
 
     override func loadData() {
-        for i in 0..<15 {
-            var imageTitle: String = ""
-            if i < 5 {
-                imageTitle = "beijing.jpg"
-            }else if i > 5 && i < 10{
-                imageTitle = "ren"
-            }else{
-                imageTitle = "zhuanshi"
+        print("开始加载数据")
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+3) {
+            for i in 0..<15 {
+                var imageTitle: String = ""
+                if i < 5 {
+                    imageTitle = "beijing.jpg"
+                }else if i > 5 && i < 10{
+                    imageTitle = "ren"
+                }else{
+                    imageTitle = "zhuanshi"
+                }
+                
+                let dict = ["title":"标题：\(i.description)","subTitle":"标题说明（子标题）：\(i.description+"1")","imageTitle":imageTitle]
+                self.dataList.insert(dict, at: 0)
             }
-            
-            let dict = ["title":"标题：\(i.description)","subTitle":"标题说明（子标题）：\(i.description+"1")","imageTitle":imageTitle]
-            dataList.insert(dict, at: 0)
+            print("加载数据完成")
+            self.refreshController?.endRefreshing()
+            self.tableView?.reloadData()
+        }
+    }
+    
+    override func pullupData(){
+        isPullUp = true
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+            for i in 0..<10 {
+                var imageTitle = ""
+                if i < 3 {
+                    imageTitle = "shulin.jpg"
+                }else if i >= 3 && i < 6{
+                    imageTitle = "meinv.jpg"
+                }else{
+                    imageTitle = "xiaohai.jpg"
+                }
+                
+                let dict = ["title":"下拉标题:\(i.description)","subTitle":"下拉标题说明(子标题):\(i.description)","imageTitle":imageTitle]
+                self.isPullUp = false
+                self.dataList.append(dict)
+                self.tableView?.reloadData()
+                
+            }
         }
     }
     
@@ -56,7 +84,8 @@ extension WBHomeController {
 //        cell.cellForStr(cellStr: self.dataList[indexPath.row])
         cell.dict = self.dataList[indexPath.row]
 //        cell.cellForDict(dict: self.dataList[indexPath.row])
-        cell.delegate = self
+//        cell.delegate = self
+        
         return cell
     }
     

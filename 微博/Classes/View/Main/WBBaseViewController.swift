@@ -11,6 +11,9 @@ import UIKit
 class WBBaseViewController: UIViewController {
 
     var tableView : UITableView?
+    var refreshController: UIRefreshControl?
+    var isPullUp = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,8 +21,12 @@ class WBBaseViewController: UIViewController {
         loadData()
     }
     ///mark 加载数据
-    func loadData() {
+    @objc func loadData() {
         
+    }
+    
+    func pullupData() {
+    
     }
 }
 
@@ -41,6 +48,19 @@ extension WBBaseViewController {
         tableView?.dataSource = self;
         tableView?.delegate = self;
         view.insertSubview(tableView!, belowSubview: (navigationController?.navigationBar)!)
+        
+        refreshController = UIRefreshControl()
+
+//        let attachment = NSTextAttachment()
+//        attachment.image = UIImage(named: "ren")
+//        attachment.bounds = CGRect(x: 0, y: 0, width: (refreshController?.frame.height)!, height: (refreshController?.frame.height)!)
+//        
+//        let attStr = NSAttributedString(attachment: attachment)
+        
+//        refreshController?.attributedTitle = attStr
+        refreshController?.tintColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+        tableView?.addSubview(refreshController!)
+        refreshController?.addTarget(self, action: #selector(loadData), for: .valueChanged)
     }
 }
 
@@ -52,6 +72,21 @@ extension WBBaseViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let row = indexPath.row
+        let section = indexPath.section
+        
+        if row < 0 || section < 0 {
+            return
+        }
+        
+        let count = tableView.numberOfRows(inSection: section)
+        if (row == count - 1) && !isPullUp {
+            pullupData()
+            
+        } 
     }
 }
 
